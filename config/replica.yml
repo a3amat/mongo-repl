@@ -1,0 +1,18 @@
+net:
+  port: 27017  
+  bindIp: 0.0.0.0
+  compression:
+    compressors: zlib,zstd
+
+security:
+  keyFile: /keyfile 
+
+replication:
+  replSetName: rep0
+
+storage:
+   journal:
+      enabled: true
+
+#setParameter:
+    #  compressors: zlib, zstd
