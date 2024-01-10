@@ -14,5 +14,3 @@ storage:
    journal:
       enabled: true
 
-#setParameter:
-    #  compressors: zlib, zstd
