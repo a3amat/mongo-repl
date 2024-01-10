@@ -1,23 +1,38 @@
 version: '3.1'
 
+volumes:
+  mongodb-data:
+
 services:
   mongo_replica:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: mongo 
+    container_name: mongo2
+    restart: unless-stopped
     command: 'mongod --config /etc/mongo/replica.yml'
     volumes: 
       - "/etc/localtime:/etc/localtime:ro"
       - ./config/replica.yml:/etc/mongo/replica.yml
       - ./script:/script
-      - ./data:/data/db
-      - ./backup:/backup
+      - mongodb-data:/data/db
+      - ./backup:/opt/backup
     ports:
-      - 27017:27017 
+      - 27027:27017 
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "100m"
+    networks:
+      - ezdocnet
     extra_hosts: 
       - "mongo1: 192.168.0.200" 
       - "mongo2: 192.168.0.201"
       - "mongo3: 192.168.0.202"
 
+networks:
+    ezdocnet:
+        name: ezdocnet
+        external: true
 
